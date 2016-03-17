@@ -19,6 +19,7 @@ defmodule ExIcal.Mixfile do
 
   defp deps do
     [
+      {:ex_doc, "~> 0.0"},
       {:timex, "~> 1.0"}
     ]
   end
