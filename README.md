@@ -1,4 +1,4 @@
-# ExIcal
+# ExIcal [![Build Status](https://travis-ci.org/fazibear/ex_ical.svg?branch=master)](https://travis-ci.org/fazibear/ex_ical)
 
 ICalendar parser for [Elixir](http://elixir-lang.org).
 
