@@ -38,7 +38,8 @@ defmodule ExIcal.Parser do
       [key, value] = rule |> String.split("=")
       case key |> String.downcase |> String.to_atom do
         :until -> hash |> Map.put(:until, DateParser.parse(value))
-        :interval ->  hash |> Map.put(:interval, String.to_integer.parse(value))
+        :interval -> hash |> Map.put(:interval, String.to_integer(value))
+        :count -> hash |> Map.put(:count, String.to_integer(value))
         key -> hash |> Map.put(key, value)
       end
     end)

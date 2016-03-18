@@ -6,16 +6,24 @@ defmodule ExIcal.Recurrence do
       case event.rrule do
         nil ->
           revents
+        %{freq: "DAILY", count: count, interval: interval} ->
+          revents ++ (event |> add_recurring_events_count(count, [days: interval]))
         %{freq: "DAILY", until: until, interval: interval} ->
           revents ++ (event |> add_recurring_events_until(until, [days: interval]))
+        %{freq: "DAILY", count: count} ->
+          revents ++ (event |> add_recurring_events_count(count, [days: 1]))
         %{freq: "DAILY", until: until} ->
           revents ++ (event |> add_recurring_events_until(until, [days: 1]))
         %{freq: "DAILY", interval: interval} ->
           revents ++ (event |> add_recurring_events_until(end_date, [days: interval]))
 
 
+        %{freq: "MONTHLY", count: count, interval: interval} ->
+          revents ++ (event |> add_recurring_events_count(count, [months: interval]))
         %{freq: "MONTHLY", until: until, interval: interval} ->
           revents ++ (event |> add_recurring_events_until(until, [months: interval]))
+        %{freq: "MONTHLY", count: count} ->
+          revents ++ (event |> add_recurring_events_count(count, [months: 1]))
         %{freq: "MONTHLY", until: until} ->
           revents ++ (event |> add_recurring_events_until(until, [months: 1]))
         %{freq: "MONTHLY", interval: interval} ->
@@ -30,14 +38,16 @@ defmodule ExIcal.Recurrence do
     case Date.compare(new_event.start, until) do
      -1 -> [new_event] ++ add_recurring_events_until(new_event, until, shift_opts)
       0 -> [new_event]
-      1 -> [new_event]
+      1 -> []
     end
   end
 
   defp add_recurring_events_count(event, count, shift_opts) do
     new_event = shift_event(event, shift_opts)
-    if count > 0 do
+    if count > 1 do
       [new_event] ++ add_recurring_events_count(new_event, count - 1, shift_opts)
+    else
+      [new_event]
     end
   end
 
@@ -47,5 +57,4 @@ defmodule ExIcal.Recurrence do
     new_event = %{new_event | end: Date.shift(event.end, shift_opts)}
     new_event
   end
-
 end
