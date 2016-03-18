@@ -6,51 +6,26 @@ defmodule ExIcal.Recurrence do
       case event.rrule do
         nil ->
           revents
-        _ ->
+        %{freq: "DAILY"} ->
           until = event.rrule[:until] || end_date
-          revents ++ (event |> add_recurring_events_for(event.rrule[:freq], until))
+          days = (event.rrule[:interval] || "1") |> String.to_integer
+          revents ++ (event |> add_recurring_events_for([days: days], until))
+        %{freq: "MONTHLY"} ->
+          until = event.rrule[:until] || end_date
+          months = (event.rrule[:interval] || "1") |> String.to_integer
+          revents ++ (event |> add_recurring_events_for([months: months], until))
       end
     end))
   end
 
-  defp add_recurring_events_for(event, "DAILY" = rule, until) do
-    days = (event.rrule[:interval] || "1") |> String.to_integer
-
+  defp add_recurring_events_for(event, shift_opts, until) do
     new_event = event
-    new_event = new_event |> Map.put(:start, Date.shift(event.start, days: days))
-    new_event = new_event |> Map.put(:end, Date.shift(event.end, days: days))
-
-    case Date.compare(new_event[:start], until) do
-     -1 -> [new_event] ++ add_recurring_events_for(new_event, rule, until)
-      0 -> [new_event] ++ add_recurring_events_for(new_event, rule, until)
-      1 -> [new_event]
-    end
-  end
-
-  defp add_recurring_events_for(event, "WEEKLY" = rule, until) do
-    days = (event.rrule[:interval] || "1") |> String.to_integer
-
-    new_event = event
-    new_event = new_event |> Map.put(:start, Date.shift(event[:start], days: days * 7))
-    new_event = new_event |> Map.put(:end, Date.shift(event[:end], days: days * 7))
+    new_event = new_event |> Map.put(:start, Date.shift(event.start, shift_opts))
+    new_event = new_event |> Map.put(:end, Date.shift(event.end, shift_opts))
 
     case Date.compare(new_event.start, until) do
-     -1 -> [new_event] ++ add_recurring_events_for(new_event, rule, until)
-      0 -> [new_event] ++ add_recurring_events_for(new_event, rule, until)
-      1 -> [new_event]
-    end
-  end
-
-  defp add_recurring_events_for(event, "MONTHLY" = rule, until) do
-    months = (event.rrule[:interval] || "1") |> String.to_integer
-
-    new_event = event
-    new_event = new_event |> Map.put(:start, Date.shift(event.start, months: months))
-    new_event = new_event |> Map.put(:end, Date.shift(event.end, months: months))
-
-    case Date.compare(new_event.start, until) do
-     -1 -> [new_event] ++ add_recurring_events_for(new_event, rule, until)
-      0 -> [new_event] #++ add_recurring_events_for(new_event, rule, until)
+     -1 -> [new_event] ++ add_recurring_events_for(new_event, shift_opts, until)
+      0 -> [new_event]# ++ add_recurring_events_for(new_event, shift_opts, until)
       1 -> [new_event]
     end
   end
