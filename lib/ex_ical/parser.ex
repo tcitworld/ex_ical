@@ -1,5 +1,6 @@
 defmodule ExIcal.Parser do
   alias ExIcal.DateParser
+  alias ExIcal.Event
 
   def parse(data) do
     data |> String.split("\n") |> Enum.reduce([], fn(line, events) ->
@@ -7,7 +8,7 @@ defmodule ExIcal.Parser do
     end)
   end
 
-  defp parse_line("BEGIN:VEVENT" <> _, events),          do: [%{}] ++ events
+  defp parse_line("BEGIN:VEVENT" <> _, events),          do: [%Event{}] ++ events
   defp parse_line("DTSTART" <> start, events)            when length(events) > 0, do: events |> put_to_map(:start, process_date(start))
   defp parse_line("DTEND" <> endd, events)               when length(events) > 0, do: events |> put_to_map(:end, process_date(endd))
   defp parse_line("DTSTAMP" <> stamp, events)            when length(events) > 0, do: events |> put_to_map(:stamp, process_date(stamp))
@@ -18,7 +19,7 @@ defmodule ExIcal.Parser do
 
   defp put_to_map(events, key, value) do
     [ event | other ] = events
-    event = event |> Map.put(key, value)
+    event = %{ event | key => value}
     [event] ++ other
   end
 

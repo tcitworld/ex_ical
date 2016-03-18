@@ -29,10 +29,10 @@ defmodule ExIcalTest do
 
     event = events |> List.first
 
-    assert event[:description] == "Let's go see Star Wars."
-    assert event[:summary] == "Film with Amy and Adam"
-    assert event[:start] == DateParser.parse("20151224T083000Z")
-    assert event[:end] == DateParser.parse("20151224T084500Z")
+    assert event.description == "Let's go see Star Wars."
+    assert event.summary == "Film with Amy and Adam"
+    assert event.start == DateParser.parse("20151224T083000Z")
+    assert event.end == DateParser.parse("20151224T084500Z")
   end
 
   test "monthly reccuring event with until" do
@@ -53,31 +53,31 @@ defmodule ExIcalTest do
     assert events |> Enum.count == 13
 
     [event|events] = events
-    assert event[:start] == DateParser.parse("20151224T083000Z")
+    assert event.start == DateParser.parse("20151224T083000Z")
     [event|events] = events
-    assert event[:start] == DateParser.parse("20160124T083000Z")
+    assert event.start == DateParser.parse("20160124T083000Z")
     [event|events] = events
-    assert event[:start] == DateParser.parse("20160224T083000Z")
+    assert event.start == DateParser.parse("20160224T083000Z")
     [event|events] = events
-    assert event[:start] == DateParser.parse("20160324T083000Z")
+    assert event.start == DateParser.parse("20160324T083000Z")
     [event|events] = events
-    assert event[:start] == DateParser.parse("20160424T083000Z")
+    assert event.start == DateParser.parse("20160424T083000Z")
     [event|events] = events
-    assert event[:start] == DateParser.parse("20160524T083000Z")
+    assert event.start == DateParser.parse("20160524T083000Z")
     [event|events] = events
-    assert event[:start] == DateParser.parse("20160624T083000Z")
+    assert event.start == DateParser.parse("20160624T083000Z")
     [event|events] = events
-    assert event[:start] == DateParser.parse("20160724T083000Z")
+    assert event.start == DateParser.parse("20160724T083000Z")
     [event|events] = events
-    assert event[:start] == DateParser.parse("20160824T083000Z")
+    assert event.start == DateParser.parse("20160824T083000Z")
     [event|events] = events
-    assert event[:start] == DateParser.parse("20160924T083000Z")
+    assert event.start == DateParser.parse("20160924T083000Z")
     [event|events] = events
-    assert event[:start] == DateParser.parse("20161024T083000Z")
+    assert event.start == DateParser.parse("20161024T083000Z")
     [event|events] = events
-    assert event[:start] == DateParser.parse("20161124T083000Z")
+    assert event.start == DateParser.parse("20161124T083000Z")
     [event] = events
-    assert event[:start] == DateParser.parse("20161224T083000Z")
+    assert event.start == DateParser.parse("20161224T083000Z")
   end
 
 end
