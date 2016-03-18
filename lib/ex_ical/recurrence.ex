@@ -16,6 +16,8 @@ defmodule ExIcal.Recurrence do
           revents ++ (event |> add_recurring_events_until(until, [days: 1]))
         %{freq: "DAILY", interval: interval} ->
           revents ++ (event |> add_recurring_events_until(end_date, [days: interval]))
+        %{freq: "DAILY"} ->
+          revents ++ (event |> add_recurring_events_until(end_date, [days: 1]))
 
 
         %{freq: "WEEKLY", count: count, interval: interval} ->
@@ -28,6 +30,8 @@ defmodule ExIcal.Recurrence do
           revents ++ (event |> add_recurring_events_until(until, [days: 7]))
         %{freq: "WEEKLY", interval: interval} ->
           revents ++ (event |> add_recurring_events_until(end_date, [days: interval * 7]))
+        %{freq: "WEEKLY"} ->
+          revents ++ (event |> add_recurring_events_until(end_date, [days: 7]))
 
 
         %{freq: "MONTHLY", count: count, interval: interval} ->
@@ -40,6 +44,8 @@ defmodule ExIcal.Recurrence do
           revents ++ (event |> add_recurring_events_until(until, [months: 1]))
         %{freq: "MONTHLY", interval: interval} ->
           revents ++ (event |> add_recurring_events_until(end_date, [months: interval]))
+        %{freq: "MONTHLY"} ->
+          revents ++ (event |> add_recurring_events_until(end_date, [months: 1]))
       end
     end))
   end
