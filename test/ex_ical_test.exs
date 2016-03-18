@@ -2,6 +2,8 @@ defmodule ExIcalTest do
   use ExUnit.Case
   use Timex
 
+  alias ExIcal.DateParser
+
   doctest ExIcal
 
   test "parse empty data" do
@@ -29,8 +31,8 @@ defmodule ExIcalTest do
 
     assert event[:description] == "Let's go see Star Wars."
     assert event[:summary] == "Film with Amy and Adam"
-    assert event[:start] == ExIcal.parse_date("20151224T083000Z")
-    assert event[:end] == ExIcal.parse_date("20151224T084500Z")
+    assert event[:start] == DateParser.parse("20151224T083000Z")
+    assert event[:end] == DateParser.parse("20151224T084500Z")
   end
 
   test "monthly reccuring event with until" do
@@ -47,35 +49,35 @@ defmodule ExIcalTest do
       END:VEVENT
       END:VCALENDAR
     """
-    events = ExIcal.parse(ical) |> ExIcal.add_recurring_events(ExIcal.parse_date("20161224T083000Z")) |> ExIcal.sort_by_date
+    events = ExIcal.parse(ical) |> ExIcal.by_range(DateParser.parse("20151224T083000Z"), DateParser.parse("20161224T084500Z"))
     assert events |> Enum.count == 13
 
     [event|events] = events
-    assert event[:start] == ExIcal.parse_date("20151224T083000Z")
+    assert event[:start] == DateParser.parse("20151224T083000Z")
     [event|events] = events
-    assert event[:start] == ExIcal.parse_date("20160124T083000Z")
+    assert event[:start] == DateParser.parse("20160124T083000Z")
     [event|events] = events
-    assert event[:start] == ExIcal.parse_date("20160224T083000Z")
+    assert event[:start] == DateParser.parse("20160224T083000Z")
     [event|events] = events
-    assert event[:start] == ExIcal.parse_date("20160324T083000Z")
+    assert event[:start] == DateParser.parse("20160324T083000Z")
     [event|events] = events
-    assert event[:start] == ExIcal.parse_date("20160424T083000Z")
+    assert event[:start] == DateParser.parse("20160424T083000Z")
     [event|events] = events
-    assert event[:start] == ExIcal.parse_date("20160524T083000Z")
+    assert event[:start] == DateParser.parse("20160524T083000Z")
     [event|events] = events
-    assert event[:start] == ExIcal.parse_date("20160624T083000Z")
+    assert event[:start] == DateParser.parse("20160624T083000Z")
     [event|events] = events
-    assert event[:start] == ExIcal.parse_date("20160724T083000Z")
+    assert event[:start] == DateParser.parse("20160724T083000Z")
     [event|events] = events
-    assert event[:start] == ExIcal.parse_date("20160824T083000Z")
+    assert event[:start] == DateParser.parse("20160824T083000Z")
     [event|events] = events
-    assert event[:start] == ExIcal.parse_date("20160924T083000Z")
+    assert event[:start] == DateParser.parse("20160924T083000Z")
     [event|events] = events
-    assert event[:start] == ExIcal.parse_date("20161024T083000Z")
+    assert event[:start] == DateParser.parse("20161024T083000Z")
     [event|events] = events
-    assert event[:start] == ExIcal.parse_date("20161124T083000Z")
+    assert event[:start] == DateParser.parse("20161124T083000Z")
     [event] = events
-    assert event[:start] == ExIcal.parse_date("20161224T083000Z")
+    assert event[:start] == DateParser.parse("20161224T083000Z")
   end
 
 end
