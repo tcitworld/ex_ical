@@ -109,6 +109,7 @@ defmodule ExIcalMonthlyTest do
     [event|events] = events
     assert event.start == DateParser.parse("20160424T083000Z")
     [event] = events
+    assert event.start == DateParser.parse("20160524T083000Z")
   end
 
   test "monthly reccuring event with count and interval" do
@@ -139,6 +140,7 @@ defmodule ExIcalMonthlyTest do
     [event|events] = events
     assert event.start == DateParser.parse("20160824T083000Z")
     [event] = events
+    assert event.start == DateParser.parse("20161024T083000Z")
   end
 
   test "monthly reccuring event with interval" do

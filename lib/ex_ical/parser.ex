@@ -40,8 +40,8 @@ defmodule ExIcal.Parser do
         :until -> hash |> Map.put(:until, DateParser.parse(value))
         :interval -> hash |> Map.put(:interval, String.to_integer(value))
         :count -> hash |> Map.put(:count, String.to_integer(value))
-        :freq -> hash |> Map.put(:ferq, value)
-        :byday -> hash
+        :freq -> hash |> Map.put(:freq, value)
+        _ -> hash
       end
     end)
   end
