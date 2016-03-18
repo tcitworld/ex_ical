@@ -51,6 +51,46 @@ defmodule ExIcalMonthlyTest do
     assert event.start == DateParser.parse("20161224T083000Z")
   end
 
+  test "monthly reccuring event" do
+    ical = """
+      BEGIN:VCALENDAR
+      CALSCALE:GREGORIAN
+      VERSION:2.0
+      BEGIN:VEVENT
+      RRULE:FREQ=MONTHLY
+      DESCRIPTION:Let's go see Star Wars.
+      DTEND:20151224T084500Z
+      DTSTART:20151224T083000Z
+      SUMMARY:Film with Amy and Adam
+      END:VEVENT
+      END:VCALENDAR
+    """
+    events = ExIcal.parse(ical) |> ExIcal.by_range(DateParser.parse("20151224T083000Z"), DateParser.parse("20160924T084500Z"))
+    assert events |> Enum.count == 10
+
+    [event|events] = events
+    assert event.start == DateParser.parse("20151224T083000Z")
+    [event|events] = events
+    assert event.start == DateParser.parse("20160124T083000Z")
+    [event|events] = events
+    assert event.start == DateParser.parse("20160224T083000Z")
+    [event|events] = events
+    assert event.start == DateParser.parse("20160324T083000Z")
+    [event|events] = events
+    assert event.start == DateParser.parse("20160424T083000Z")
+    [event|events] = events
+    assert event.start == DateParser.parse("20160524T083000Z")
+    [event|events] = events
+    assert event.start == DateParser.parse("20160624T083000Z")
+    [event|events] = events
+    assert event.start == DateParser.parse("20160724T083000Z")
+    [event|events] = events
+    assert event.start == DateParser.parse("20160824T083000Z")
+    [event] = events
+    assert event.start == DateParser.parse("20160924T083000Z")
+  end
+
+
   test "monthly reccuring event with until and interval" do
     ical = """
       BEGIN:VCALENDAR

@@ -37,6 +37,35 @@ defmodule ExIcalWeeklyTest do
     assert event.start == DateParser.parse("20160128T083000Z")
   end
 
+  test "weekly reccuring event" do
+    ical = """
+      BEGIN:VCALENDAR
+      CALSCALE:GREGORIAN
+      VERSION:2.0
+      BEGIN:VEVENT
+      RRULE:FREQ=WEEKLY
+      DESCRIPTION:Let's go see Star Wars.
+      DTEND:20151224T084500Z
+      DTSTART:20151224T083000Z
+      SUMMARY:Film with Amy and Adam
+      END:VEVENT
+      END:VCALENDAR
+    """
+    events = ExIcal.parse(ical) |> ExIcal.by_range(DateParser.parse("20151224T083000Z"), DateParser.parse("20160121T084500Z"))
+    assert events |> Enum.count == 5
+
+    [event|events] = events
+    assert event.start == DateParser.parse("20151224T083000Z")
+    [event|events] = events
+    assert event.start == DateParser.parse("20151231T083000Z")
+    [event|events] = events
+    assert event.start == DateParser.parse("20160107T083000Z")
+    [event|events] = events
+    assert event.start == DateParser.parse("20160114T083000Z")
+    [event] = events
+    assert event.start == DateParser.parse("20160121T083000Z")
+  end
+
   test "weekly reccuring event with until and interval" do
     ical = """
       BEGIN:VCALENDAR
