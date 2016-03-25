@@ -1,4 +1,4 @@
-# ExIcal ![Package Version](https://img.shields.io/hexpm/v/ex_ical.svg) [![Build Status](https://travis-ci.org/fazibear/ex_ical.svg?branch=master)](https://travis-ci.org/fazibear/ex_ical)
+# ExIcal [![Package Version](https://img.shields.io/hexpm/v/ex_ical.svg)](https://hex.pm/packages/ex_ical) [![Build Status](https://travis-ci.org/fazibear/ex_ical.svg?branch=master)](https://travis-ci.org/fazibear/ex_ical)
 
 Not ready yet!
 
