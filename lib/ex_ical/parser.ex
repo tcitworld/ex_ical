@@ -18,11 +18,12 @@ defmodule ExIcal.Parser do
   defp parse_line("TZID:" <> tzid, data),               do: data |> Map.put(:tzid, tzid)
   defp parse_line(_, data), do: data
 
-  defp put_to_map(%{events: events} = data, key, value) do
+  defp put_to_map(%{events: events} = data, key, value) when length(events) > 0 do
     [ event | other ] = events
     event = %{ event | key => value}
     %{ data | events: [event] ++ other }
   end
+  defp put_to_map(data, _key, _value), do: data
 
   defp process_date(":" <> date, tzid), do: DateParser.parse(date, tzid)
   defp process_date(":" <> date, tzid), do: DateParser.parse(date, tzid)
