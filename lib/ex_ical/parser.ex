@@ -26,7 +26,6 @@ defmodule ExIcal.Parser do
   defp put_to_map(data, _key, _value), do: data
 
   defp process_date(":" <> date, tzid), do: DateParser.parse(date, tzid)
-  defp process_date(":" <> date, tzid), do: DateParser.parse(date, tzid)
   defp process_date(";" <> date, _) do
     [timezone, date] = date |> String.split(":")
     timezone = case timezone do
