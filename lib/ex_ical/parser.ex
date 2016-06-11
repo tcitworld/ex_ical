@@ -3,9 +3,12 @@ defmodule ExIcal.Parser do
   alias ExIcal.Event
 
   def parse(data) do
-    data |> String.split("\n") |> Enum.reduce(%{events: []}, fn(line, data) ->
+    data
+    |> String.split("\n")
+    |> Enum.reduce(%{events: []}, fn(line, data) ->
       parse_line(String.strip(line), data)
-    end) |> Map.get(:events)
+    end)
+    |> Map.get(:events)
   end
 
   defp parse_line("BEGIN:VEVENT" <> _, data),           do: %{events: [%Event{}] ++ data[:events]}
@@ -19,9 +22,9 @@ defmodule ExIcal.Parser do
   defp parse_line(_, data), do: data
 
   defp put_to_map(%{events: events} = data, key, value) when length(events) > 0 do
-    [ event | other ] = events
-    event = %{ event | key => value}
-    %{ data | events: [event] ++ other }
+    [event | other] = events
+    event = %{event | key => value}
+    %{data | events: [event] ++ other}
   end
   defp put_to_map(data, _key, _value), do: data
 
@@ -39,11 +42,11 @@ defmodule ExIcal.Parser do
     rrule |> String.split(";") |> Enum.reduce(%{}, fn(rule, hash) ->
       [key, value] = rule |> String.split("=")
       case key |> String.downcase |> String.to_atom do
-        :until -> hash |> Map.put(:until, DateParser.parse(value, tzid))
+        :until    -> hash |> Map.put(:until, DateParser.parse(value, tzid))
         :interval -> hash |> Map.put(:interval, String.to_integer(value))
-        :count -> hash |> Map.put(:count, String.to_integer(value))
-        :freq -> hash |> Map.put(:freq, value)
-        _ -> hash
+        :count    -> hash |> Map.put(:count, String.to_integer(value))
+        :freq     -> hash |> Map.put(:freq, value)
+        _         -> hash
       end
     end)
   end
