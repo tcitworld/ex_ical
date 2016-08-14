@@ -1,7 +1,5 @@
 defmodule ExIcalTzidTest do
   use ExUnit.Case
-  use Timex
-
   alias ExIcal.DateParser
 
   doctest ExIcal
