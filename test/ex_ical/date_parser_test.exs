@@ -27,17 +27,18 @@ defmodule ExIcal.DateParserTest do
   date_match     = %{year: 1969, month: 6, day: 20}
   datetime_match = %{year: 1969, month: 6, day: 20,
                      hour: 20, minute: 18, second: 4}
-  new_york_tzmatch = %{full_name: "America/New_York"}
+  chicago_tzmatch  = %{full_name: "America/Chicago"}
   utc_tzmatch      = %{full_name: "UTC"}
+  local_tzmatch    = Map.delete(Timex.Timezone.local, :__struct__) # struct to map
 
   allowed_date_formats = [
     #------------------+--------------------------------------------------+
     # Input Datestring |   Parsed Date |  Timezone When Global TZID = ?   |
-    #                  |               |           nil | America/New_York |
+    #                  |               |           nil |  America/Chicago |
     #------------------+--------------------------------------------------+
-    [        "19690620",     date_match,            nil,              nil,],
-    [       "19690620Z",     date_match,            nil,              nil,],
-    [ "19690620T201804", datetime_match,            nil, new_york_tzmatch,],
+    [        "19690620",     date_match,  local_tzmatch,    local_tzmatch,],
+    [       "19690620Z",     date_match,  local_tzmatch,    local_tzmatch,],
+    [ "19690620T201804", datetime_match,  local_tzmatch,  chicago_tzmatch,],
     ["19690620T201804Z", datetime_match,    utc_tzmatch,      utc_tzmatch,],
   ]
   for [input, date_match, no_tzid, global_tzid] <- allowed_date_formats do
@@ -61,7 +62,7 @@ defmodule ExIcal.DateParserTest do
       assert_subset expected.timezone, parsed_date.timezone
     end
 
-    tzid = "America/New_York"
+    tzid = "America/Chicago"
     @tag input:    input
     @tag tzid:     tzid
     @tag expected: %{date: date_match, timezone: global_tzid}

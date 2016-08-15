@@ -47,7 +47,7 @@ defmodule ExIcal.DateParser do
 
   @spec datetime_from_params(tuple, tuple, any) :: %Timex.DateTime{}
   defp datetime_from_params(date, time, timezone \\ nil)
-  defp datetime_from_params({year, month, day}, {hour, minute, second}, nil) do
+  defp datetime_from_params({year, month, day} = date, {hour, minute, second} = time, nil) do
     %DateTime{
       year:   year   |> String.to_integer,
       month:  month  |> String.to_integer,
@@ -55,6 +55,7 @@ defmodule ExIcal.DateParser do
       hour:   hour   |> String.to_integer,
       minute: minute |> String.to_integer,
       second: second |> String.to_integer,
+      timezone: Timezone.local
     }
   end
   defp datetime_from_params({year, month, day}, {}, nil) do
@@ -62,6 +63,7 @@ defmodule ExIcal.DateParser do
       year:     year  |> String.to_integer,
       month:    month |> String.to_integer,
       day:      day   |> String.to_integer,
+      timezone: Timezone.local
     }
   end
   defp datetime_from_params(date, time, tzid) do
