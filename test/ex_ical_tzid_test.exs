@@ -18,24 +18,18 @@ defmodule ExIcalTzidTest do
       END:VEVENT
       END:VCALENDAR
     """
-    events = ExIcal.parse(ical) |> ExIcal.by_range(DateParser.parse("20151224T083000", tzid), DateParser.parse("20161224T084500", tzid))
-    assert events |> Enum.count == 8
+    events = ical
+             |> ExIcal.parse
+             |> ExIcal.by_range(DateParser.parse("20151224T083000", tzid),
+                                DateParser.parse("20161224T084500", tzid))
+    expected_starts = ~w[
+      20151224T083000 20151225T083000 20151226T083000 20151227T083000
+      20151228T083000 20151229T083000 20151230T083000 20151231T083000
+    ]
 
-    [event|events] = events
-    assert event.start == DateParser.parse("20151224T083000", tzid)
-    [event|events] = events
-    assert event.start == DateParser.parse("20151225T083000", tzid)
-    [event|events] = events
-    assert event.start == DateParser.parse("20151226T083000", tzid)
-    [event|events] = events
-    assert event.start == DateParser.parse("20151227T083000", tzid)
-    [event|events] = events
-    assert event.start == DateParser.parse("20151228T083000", tzid)
-    [event|events] = events
-    assert event.start == DateParser.parse("20151229T083000", tzid)
-    [event|events] = events
-    assert event.start == DateParser.parse("20151230T083000", tzid)
-    [event] = events
-    assert event.start == DateParser.parse("20151231T083000", tzid)
+    assert events |> Enum.count == 8
+    for {event, expected_start} <- Enum.zip(events, expected_starts) do
+      assert event.start == DateParser.parse(expected_start, tzid)
+    end
   end
 end
