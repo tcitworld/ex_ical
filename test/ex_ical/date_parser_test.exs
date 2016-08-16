@@ -19,12 +19,12 @@ defmodule ExIcal.DateParserTest do
     # Input Datestring |   Parsed Date |  Timezone When Global TZID = ?   |
     #                  |               |           nil |  America/Chicago |
     #------------------+--------------------------------------------------+
-    [        "19690620",     date_match,  local_tzmatch,    local_tzmatch,],
-    [       "19690620Z",     date_match,  local_tzmatch,    local_tzmatch,],
-    [ "19690620T201804", datetime_match,  local_tzmatch,  chicago_tzmatch,],
-    ["19690620T201804Z", datetime_match,    utc_tzmatch,      utc_tzmatch,],
+    {        "19690620",     date_match,  local_tzmatch,    local_tzmatch,},
+    {       "19690620Z",     date_match,    utc_tzmatch,      utc_tzmatch,},
+    { "19690620T201804", datetime_match,  local_tzmatch,  chicago_tzmatch,},
+    {"19690620T201804Z", datetime_match,    utc_tzmatch,      utc_tzmatch,},
   ]
-  for [input, date_match, no_tzid, global_tzid] <- allowed_date_formats do
+  for {input, date_match, no_tzid, global_tzid} <- allowed_date_formats do
     @tag input:    input
     @tag expected: %{date: date_match, timezone: no_tzid}
     test ~s[DateParser.parse/1 (date format: "#{input}")],

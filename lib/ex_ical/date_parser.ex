@@ -107,7 +107,7 @@ defmodule ExIcal.DateParser do
   def parse(<< year :: binary-size(4), month :: binary-size(2), day :: binary-size(2), "Z" >>, _timezone) do
     {year, month, day}
     |> to_integers
-    |> Date.from(:local)
+    |> Date.from(:utc)
   end
 
   # Date Format: "19690620", Timezone: *

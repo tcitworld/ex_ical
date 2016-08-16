@@ -30,7 +30,7 @@ defmodule ExIcal.DateFormatsTest do
     #                                             |               |            nil | America/Chicago |
     #---------------------------------------------+---------------+----------------+-----------------+
     {                           "DTSTART:19690620",     date_match,  local_tzmatch,   local_tzmatch,},
-    {                          "DTSTART:19690620Z",     date_match,  local_tzmatch,   local_tzmatch,},
+    {                          "DTSTART:19690620Z",     date_match,    utc_tzmatch,     utc_tzmatch,},
     {                    "DTSTART:19690620T201804", datetime_match,  local_tzmatch, chicago_tzmatch,},
     {                   "DTSTART:19690620T201804Z", datetime_match,    utc_tzmatch,     utc_tzmatch,},
     { "DTSTART;TZID=Europe/Berlin:19690620T201804", datetime_match, berlin_tzmatch,  berlin_tzmatch,},
