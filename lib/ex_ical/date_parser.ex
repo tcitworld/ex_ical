@@ -67,7 +67,7 @@ defmodule ExIcal.DateParser do
     the returned %DateTime{} will be in the local timezone.
   """
 
-  @spec parse(String.t, Types.valid_timezone | nil) :: %Timex.DateTime{}
+  @spec parse(String.t, Timex.Types.valid_timezone | nil) :: %Timex.DateTime{}
   def parse(data, tzid \\ nil)
 
   # Date Format: "19690620T201804Z", Timezone: *
