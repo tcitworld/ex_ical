@@ -20,7 +20,9 @@ defmodule ExIcal.DateFormatsTest do
   chicago_tzmatch  = %{full_name: "America/Chicago"}
   berlin_tzmatch   = %{full_name: "Europe/Berlin"}
   utc_tzmatch      = %{full_name: "UTC"}
-  local_tzmatch    = Map.delete(Timex.Timezone.local, :__struct__) # struct to map
+  local_tzmatch    = Timex.Timezone.local
+                     |> Map.from_struct
+                     |> Map.take([:full_name])
 
   allowed_date_formats = [
     #---------------------------------------------+---------------+----------------------------------+
