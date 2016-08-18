@@ -91,7 +91,7 @@ defmodule ExIcal.DateParser do
     time = {hour, minutes, seconds}
 
     {to_integers(date), to_integers(time)}
-    |> Date.from(:local)
+    |> Date.from(:utc)
   end
 
   # Date Format: "19690620T201804", Timezone: *
@@ -116,7 +116,7 @@ defmodule ExIcal.DateParser do
   def parse(<< year :: binary-size(4), month :: binary-size(2), day :: binary-size(2) >>, _timezone) do
     {year, month, day}
     |> to_integers
-    |> Date.from(:local)
+    |> Date.from(:utc)
   end
 
   @spec to_integers({String.t, String.t, String.t}) :: {integer, integer, integer}

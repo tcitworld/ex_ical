@@ -20,18 +20,15 @@ defmodule ExIcal.DateFormatsTest do
   chicago_tzmatch  = %{full_name: "America/Chicago"}
   berlin_tzmatch   = %{full_name: "Europe/Berlin"}
   utc_tzmatch      = %{full_name: "UTC"}
-  local_tzmatch    = Timex.Timezone.local
-                     |> Map.from_struct
-                     |> Map.take([:full_name])
 
   allowed_date_formats = [
     #---------------------------------------------+---------------+----------------------------------+
     #                               DTSTART input |   Parsed Date |  Timezone with Global TZID = ?   |
     #                                             |               |            nil | America/Chicago |
     #---------------------------------------------+---------------+----------------+-----------------+
-    {                           "DTSTART:19690620",     date_match,  local_tzmatch,   local_tzmatch,},
+    {                           "DTSTART:19690620",     date_match,    utc_tzmatch,     utc_tzmatch,},
     {                          "DTSTART:19690620Z",     date_match,    utc_tzmatch,     utc_tzmatch,},
-    {                    "DTSTART:19690620T201804", datetime_match,  local_tzmatch, chicago_tzmatch,},
+    {                    "DTSTART:19690620T201804", datetime_match,    utc_tzmatch, chicago_tzmatch,},
     {                   "DTSTART:19690620T201804Z", datetime_match,    utc_tzmatch,     utc_tzmatch,},
     { "DTSTART;TZID=Europe/Berlin:19690620T201804", datetime_match, berlin_tzmatch,  berlin_tzmatch,},
     {"DTSTART;TZID=Europe/Berlin:19690620T201804Z", datetime_match,    utc_tzmatch,     utc_tzmatch,},
