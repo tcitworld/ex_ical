@@ -12,8 +12,8 @@ env:
     — PULL_REQUEST_ID=$TRAVIS_PULL_REQUEST
 
 before_script:
-  — rvm install ruby-2.3.1
-  — gem install pronto-credo
+  - rvm install ruby-2.3.1
+  - gem install pronto-credo
 
 script:
   - if [ $PULL_REQUEST_ID != false ]; then pronto run -f github_pr; fi
