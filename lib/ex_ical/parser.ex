@@ -11,7 +11,7 @@ defmodule ExIcal.Parser do
     |> Map.get(:events)
   end
 
-  defp parse_line("BEGIN:VEVENT" <> _, data),           do: %{events: [%Event{}] ++ data[:events]}
+  defp parse_line("BEGIN:VEVENT" <> _, data),           do: %{data | events: [%Event{} | data[:events]]}
   defp parse_line("DTSTART" <> start, data),            do: data |> put_to_map(:start, process_date(start, data[:tzid]))
   defp parse_line("DTEND" <> endd, data),               do: data |> put_to_map(:end, process_date(endd, data[:tzid]))
   defp parse_line("DTSTAMP" <> stamp, data),            do: data |> put_to_map(:stamp, process_date(stamp, data[:tzid]))
@@ -21,10 +21,9 @@ defmodule ExIcal.Parser do
   defp parse_line("TZID:" <> tzid, data),               do: data |> Map.put(:tzid, tzid)
   defp parse_line(_, data), do: data
 
-  defp put_to_map(%{events: events} = data, key, value) when length(events) > 0 do
-    [event | other] = events
-    event = %{event | key => value}
-    %{data | events: [event] ++ other}
+  defp put_to_map(%{events: [event | events]} = data, key, value) do
+    updated_event = %{event | key => value}
+    %{data | events: [updated_event | events]}
   end
   defp put_to_map(data, _key, _value), do: data
 

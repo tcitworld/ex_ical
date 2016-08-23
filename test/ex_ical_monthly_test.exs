@@ -1,7 +1,5 @@
 defmodule ExIcalMonthlyTest do
   use ExUnit.Case
-  use Timex
-
   alias ExIcal.DateParser
 
   doctest ExIcal
@@ -90,7 +88,6 @@ defmodule ExIcalMonthlyTest do
     assert event.start == DateParser.parse("20160924T083000Z")
   end
 
-
   test "monthly reccuring event with until and interval" do
     ical = """
       BEGIN:VCALENDAR
@@ -119,7 +116,6 @@ defmodule ExIcalMonthlyTest do
     [event] = events
     assert event.start == DateParser.parse("20161224T083000Z")
   end
-
 
   test "monthly reccuring event with count" do
     ical = """

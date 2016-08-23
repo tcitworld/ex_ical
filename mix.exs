@@ -8,6 +8,7 @@ defmodule ExIcal.Mixfile do
       description: "ICalendar parser.",
       package: package,
       deps: deps,
+      dialyzer: [plt_add_deps: true],
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod
     ]

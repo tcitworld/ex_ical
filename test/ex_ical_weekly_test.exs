@@ -1,7 +1,5 @@
 defmodule ExIcalWeeklyTest do
   use ExUnit.Case
-  use Timex
-
   alias ExIcal.DateParser
 
   doctest ExIcal
@@ -100,7 +98,7 @@ defmodule ExIcalWeeklyTest do
   end
 
 
-  test "monthly reccuring event with count" do
+  test "weekly reccuring event with count" do
     ical = """
       BEGIN:VCALENDAR
       CALSCALE:GREGORIAN
@@ -131,7 +129,7 @@ defmodule ExIcalWeeklyTest do
     assert event.start == DateParser.parse("20160128T083000Z")
   end
 
-  test "monthly reccuring event with count and interval" do
+  test "weekly reccuring event with count and interval" do
     ical = """
       BEGIN:VCALENDAR
       CALSCALE:GREGORIAN
@@ -160,7 +158,7 @@ defmodule ExIcalWeeklyTest do
     assert event.start == DateParser.parse("20160804T083000Z")
   end
 
-  test "monthly reccuring event with interval" do
+  test "weekly reccuring event with interval" do
     ical = """
       BEGIN:VCALENDAR
       CALSCALE:GREGORIAN
