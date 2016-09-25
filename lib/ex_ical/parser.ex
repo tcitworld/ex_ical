@@ -1,7 +1,20 @@
 defmodule ExIcal.Parser do
+  @moduledoc """
+  Ical parser module
+  """
   alias ExIcal.DateParser
   alias ExIcal.Event
 
+  @doc """
+  Parse ical data. Returns `Event` struct.
+
+  ## Example
+  ```elixir
+  HTTPotion.get("url-for-icalendar").body
+    |> ExIcal.parse
+    |> ExIcal.by_range(Date.now, Date.now |> Date.shift(days: 7))
+  ```
+  """
   def parse(data) do
     data
     |> String.split("\n")

@@ -1,6 +1,16 @@
 defmodule ExIcal.Recurrence do
+  @moduledoc """
+  Recurring events support.
+  """
   use Timex
 
+  @doc """
+  Add recurring events to events list.
+
+  ## Parameters
+    - events: events list
+    - end_date: how long recurrence will occur
+  """
   def add_recurring_events(events, end_date \\ Date.now) do
     events ++ (events |> Enum.reduce([], fn(event, revents) ->
       case event.rrule do
