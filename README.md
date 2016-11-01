@@ -1,4 +1,4 @@
-# ExIcal [![Package Version](https://img.shields.io/hexpm/v/ex_ical.svg)](https://hex.pm/packages/ex_ical) [![Build Status](https://travis-ci.org/fazibear/ex_ical.svg?branch=master)](https://travis-ci.org/fazibear/ex_ical)
+# ExIcal [![Package Version](https://img.shields.io/hexpm/v/ex_ical.svg)](https://hex.pm/packages/ex_ical) [![Build Status](https://travis-ci.org/fazibear/ex_ical.svg?branch=master)](https://travis-ci.org/fazibear/ex_ical) [![Code Climate](https://codeclimate.com/repos/5818c0504f918c17b5000fac/badges/4a7eac860972dff652e9/gpa.svg)](https://codeclimate.com/repos/5818c0504f918c17b5000fac/feed)
 
 Not ready yet!
 
