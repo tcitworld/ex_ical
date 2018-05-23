@@ -3,8 +3,8 @@ defmodule ExIcal.Mixfile do
 
   def project do
     [app: :ex_ical,
-      version: "0.1.0",
-      elixir: "~> 1.2",
+      version: "0.2.0",
+      elixir: "~> 1.4",
       description: "ICalendar parser.",
       package: package(),
       deps: deps(),
