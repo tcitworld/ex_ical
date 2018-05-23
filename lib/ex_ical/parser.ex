@@ -27,7 +27,7 @@ defmodule ExIcal.Parser do
   ```elixir
   HTTPotion.get("url-for-icalendar").body
     |> ExIcal.parse
-    |> ExIcal.by_range(Date.now, Date.now |> Timex.shift(days: 7))
+    |> ExIcal.by_range(DateTime.utc_now(), DateTime.utc_now() |> Timex.shift(days: 7))
   ```
   """
 

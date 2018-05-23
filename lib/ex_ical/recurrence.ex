@@ -19,7 +19,7 @@ defmodule ExIcal.Recurrence do
       for a recurring event. This value is only used when the options specified
       in rrule result in an infinite recurrance (ie. when neither `count` nor
       `until` is set). If no end_date is set, it will default to
-      `Timex.Date.now`.
+      `DateTime.utc_now()`.
 
   ## Event rrule options
 
