@@ -17,9 +17,9 @@ defmodule ExIcal.DateFormatsTest do
   date_match     = %{year: 1969, month: 6, day: 20}
   datetime_match = %{year: 1969, month: 6, day: 20,
                      hour: 20, minute: 18, second: 4}
-  chicago_tzmatch  = %{full_name: "America/Chicago"}
-  berlin_tzmatch   = %{full_name: "Europe/Berlin"}
-  utc_tzmatch      = %{full_name: "UTC"}
+  chicago_tzmatch  = "America/Chicago"
+  berlin_tzmatch   = "Europe/Berlin"
+  utc_tzmatch      = "UTC"
 
   allowed_date_formats = [
     #---------------------------------------------+---------------+----------------------------------+
@@ -46,7 +46,7 @@ defmodule ExIcal.DateFormatsTest do
                     |> ical
                     |> ExIcal.parse
       assert_subset date_match, event.start
-      assert_subset timezone, event.start.timezone
+      assert_subset timezone, event.start.time_zone
     end
 
     @tag dtstart: dtstart
@@ -59,7 +59,7 @@ defmodule ExIcal.DateFormatsTest do
                     |> ical(tzid)
                     |> ExIcal.parse
       assert_subset date_match, event.start
-      assert_subset timezone, event.start.timezone
+      assert_subset timezone, event.start.time_zone
     end
   end
 end

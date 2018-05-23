@@ -8,8 +8,8 @@ defmodule ExIcal.DateParserTest do
   date_match     = %{year: 1969, month: 6, day: 20}
   datetime_match = %{year: 1969, month: 6, day: 20,
                      hour: 20, minute: 18, second: 4}
-  chicago_tzmatch  = %{full_name: "America/Chicago"}
-  utc_tzmatch      = %{full_name: "UTC"}
+  chicago_tzmatch  = "America/Chicago"
+  utc_tzmatch      = "UTC"
 
   allowed_date_formats = [
     #------------------+--------------------------------------------------+
@@ -29,7 +29,7 @@ defmodule ExIcal.DateParserTest do
       parsed_date = DateParser.parse input
 
       assert_subset expected.date, parsed_date
-      assert_subset expected.timezone, parsed_date.timezone
+      assert_subset expected.timezone, parsed_date.time_zone
     end
 
     @tag input:    input
@@ -39,7 +39,7 @@ defmodule ExIcal.DateParserTest do
       parsed_date = DateParser.parse(input, nil)
 
       assert_subset expected.date, parsed_date
-      assert_subset expected.timezone, parsed_date.timezone
+      assert_subset expected.timezone, parsed_date.time_zone
     end
 
     @tag input:    input
@@ -50,7 +50,7 @@ defmodule ExIcal.DateParserTest do
       parsed_date = DateParser.parse(input, tzid)
 
       assert_subset expected.date, parsed_date
-      assert_subset expected.timezone, parsed_date.timezone
+      assert_subset expected.timezone, parsed_date.time_zone
     end
   end
 end

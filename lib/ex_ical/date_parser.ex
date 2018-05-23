@@ -4,8 +4,6 @@ defmodule ExIcal.DateParser do
   `parse/2`.
   """
 
-  alias Timex.{Date,DateTime}
-
   @doc """
   Responsible for parsing datestrings in predefined formats into %DateTime{}
   structs. Valid formats are defined by the "Internet Calendaring and Scheduling
@@ -80,7 +78,8 @@ defmodule ExIcal.DateParser do
     time = {hour, minutes, seconds}
 
     {to_integers(date), to_integers(time)}
-    |> Date.from(:utc)
+    |> NaiveDateTime.from_erl!()
+    |> DateTime.from_naive!("Etc/UTC")
   end
 
   # Date Format: "19690620T201804", Timezone: nil
@@ -91,7 +90,8 @@ defmodule ExIcal.DateParser do
     time = {hour, minutes, seconds}
 
     {to_integers(date), to_integers(time)}
-    |> Date.from(:utc)
+    |> NaiveDateTime.from_erl!()
+    |> DateTime.from_naive!("Etc/UTC")
   end
 
   # Date Format: "19690620T201804", Timezone: *
@@ -102,21 +102,19 @@ defmodule ExIcal.DateParser do
     time = {hour, minutes, seconds}
 
     {to_integers(date), to_integers(time)}
-    |> Date.from(timezone)
+    |> Timex.to_datetime(timezone)
   end
 
   # Date Format: "19690620Z", Timezone: *
   def parse(<< year :: binary-size(4), month :: binary-size(2), day :: binary-size(2), "Z" >>, _timezone) do
-    {year, month, day}
-    |> to_integers
-    |> Date.from(:utc)
+    {to_integers({year, month, day}), {0, 0, 0}}
+    |> Timex.to_datetime()
   end
 
   # Date Format: "19690620", Timezone: *
   def parse(<< year :: binary-size(4), month :: binary-size(2), day :: binary-size(2) >>, _timezone) do
-    {year, month, day}
-    |> to_integers
-    |> Date.from(:utc)
+    {to_integers({year, month, day}), {0, 0, 0}}
+    |> Timex.to_datetime()
   end
 
   @spec to_integers({String.t, String.t, String.t}) :: {integer, integer, integer}

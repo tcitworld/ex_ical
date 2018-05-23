@@ -4,6 +4,9 @@ defmodule ExIcal.Test.Utils do
   def subset?(nil, nil), do: true
   def subset?(nil, _), do: false
   def subset?(_, nil), do: false
+  def subset?("" <> subset, "" <> superset) do
+    String.contains?(superset, subset)
+  end
   def subset?(%{} = subset, %{} = superset) do
     superset_contains_pair = fn {k, v} ->
       %{superset | k => v} === superset
