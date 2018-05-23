@@ -32,8 +32,8 @@ defmodule ExIcal.Mixfile do
 
   defp deps() do
     [
-      {:ex_doc, ">= 0.0.0", only: :dev},
-      {:credo, "~> 0.5.0", only: :dev},
+      {:ex_doc, "~> 0.16", only: :dev, runtime: false},
+      {:credo, "~> 0.9.1", only: [:dev, :test], runtime: false},
       {:timex, "~> 3.1"}
     ]
   end
