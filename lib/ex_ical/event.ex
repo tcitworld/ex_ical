@@ -33,6 +33,10 @@ defmodule ExIcal.Event do
       Defines a rule or repeating pattern for recurring events. Corresponds to
       the iCal `RRULE` property ([4.8.5.4 Recurrence Rule]).
 
+    - `categories`:
+      Defines the categories for a calendar component. Corresponds to
+      the iCal `CATEGORIES` property ([4.8.1.2 Recurrence Rule]).
+
   [RFC 2445]: https://www.ietf.org/rfc/rfc2445.txt
   [4.8.2.4 Date/Time Start]: http://www.kanzaki.com/docs/ical/dtstart.html
   [4.8.2.2 Date/Time End]:   http://www.kanzaki.com/docs/ical/dtend.html
@@ -51,5 +55,6 @@ defmodule ExIcal.Event do
             stamp: nil,
             description: nil,
             summary: nil,
-            rrule: nil
+            rrule: nil,
+            categories: nil
 end
