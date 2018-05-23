@@ -49,6 +49,7 @@ defmodule ExIcal.Parser do
   defp parse_line("DESCRIPTION:" <> description, data), do: data |> put_to_map(:description, description)
   defp parse_line("RRULE:" <> rrule, data),             do: data |> put_to_map(:rrule, process_rrule(rrule, data[:tzid]))
   defp parse_line("TZID:" <> tzid, data),               do: data |> Map.put(:tzid, tzid)
+  defp parse_line("CATEGORIES:" <> categories, data),    do: data |> put_to_map(:categories, String.split(categories, ","))
   defp parse_line(_, data), do: data
 
   defp put_to_map(%{events: [event | events]} = data, key, value) do

@@ -18,6 +18,7 @@ defmodule ExIcalTest do
       DTEND:20151224T084500Z
       DTSTART:20151224T083000Z
       SUMMARY:Film with Amy and Adam
+      CATEGORIES:MOVIES,SOCIAL
       END:VEVENT
       END:VCALENDAR
     """
@@ -31,5 +32,6 @@ defmodule ExIcalTest do
     assert event.summary == "Film with Amy and Adam"
     assert event.start == DateParser.parse("20151224T083000Z")
     assert event.end == DateParser.parse("20151224T084500Z")
+    assert event.categories == ["MOVIES", "SOCIAL"]
   end
 end
