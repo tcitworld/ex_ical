@@ -47,6 +47,7 @@ defmodule ExIcal.Parser do
   defp parse_line("DTSTAMP" <> stamp, data),            do: data |> put_to_map(:stamp, process_date(stamp, data[:tzid]))
   defp parse_line("SUMMARY:" <> summary, data),         do: data |> put_to_map(:summary, summary)
   defp parse_line("DESCRIPTION:" <> description, data), do: data |> put_to_map(:description, description)
+  defp parse_line("UID:" <> uid, data),                 do: data |> put_to_map(:uid, uid)
   defp parse_line("RRULE:" <> rrule, data),             do: data |> put_to_map(:rrule, process_rrule(rrule, data[:tzid]))
   defp parse_line("TZID:" <> tzid, data),               do: data |> Map.put(:tzid, tzid)
   defp parse_line(_, data), do: data

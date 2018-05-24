@@ -18,6 +18,7 @@ defmodule ExIcalTest do
       DTEND:20151224T084500Z
       DTSTART:20151224T083000Z
       SUMMARY:Film with Amy and Adam
+      UID:19960401T080045Z-4000F192713-0052@host1.com
       END:VEVENT
       END:VCALENDAR
     """
@@ -31,5 +32,6 @@ defmodule ExIcalTest do
     assert event.summary == "Film with Amy and Adam"
     assert event.start == DateParser.parse("20151224T083000Z")
     assert event.end == DateParser.parse("20151224T084500Z")
+    assert event.uid == "19960401T080045Z-4000F192713-0052@host1.com"
   end
 end
