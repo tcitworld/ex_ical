@@ -100,6 +100,19 @@ defmodule ExIcal.Recurrence do
           revents ++ (event |> add_recurring_events_until(end_date, [months: interval]))
         %{freq: "MONTHLY"} ->
           revents ++ (event |> add_recurring_events_until(end_date, [months: 1]))
+
+        %{freq: "YEARLY", count: count, interval: interval} ->
+          revents ++ (event |> add_recurring_events_count(count, [years: interval]))
+        %{freq: "YEARLY", until: until, interval: interval} ->
+          revents ++ (event |> add_recurring_events_until(until, [years: interval]))
+        %{freq: "YEARLY", count: count} ->
+          revents ++ (event |> add_recurring_events_count(count, [years: 1]))
+        %{freq: "YEARLY", until: until} ->
+          revents ++ (event |> add_recurring_events_until(until, [years: 1]))
+        %{freq: "YEARLY", interval: interval} ->
+          revents ++ (event |> add_recurring_events_until(end_date, [years: interval]))
+        %{freq: "YEARLY"} ->
+          revents ++ (event |> add_recurring_events_until(end_date, [years: 1]))
       end
     end))
   end
