@@ -17,12 +17,11 @@ defmodule ExIcal do
   ```elixir
     HTTPotion.get("url-for-icalendar").body
       |> ExIcal.parse
-      |> ExIcal.by_range(Date.now, Date.now |> Date.shift(days: 7))
+      |> ExIcal.by_range(DateTime.utc_now(), DateTime.utc_now() |> Timex.shift(days: 7))
   ```
   """
 
   alias ExIcal.{Parser,Recurrence,Utils,Event}
-  alias Timex.DateTime
 
   @spec parse(String.t) :: [%Event{}]
   defdelegate parse(data), to: Parser

@@ -7,7 +7,6 @@ defmodule ExIcal.Recurrence do
   """
 
   alias ExIcal.Event
-  alias Timex.{Date,DateTime}
 
   @doc """
   Add recurring events to events list
@@ -20,7 +19,7 @@ defmodule ExIcal.Recurrence do
       for a recurring event. This value is only used when the options specified
       in rrule result in an infinite recurrance (ie. when neither `count` nor
       `until` is set). If no end_date is set, it will default to
-      `Timex.Date.now`.
+      `DateTime.utc_now()`.
 
   ## Event rrule options
 
@@ -57,7 +56,7 @@ defmodule ExIcal.Recurrence do
 
   @spec add_recurring_events([%Event{}])              :: [%Event{}]
   @spec add_recurring_events([%Event{}], %DateTime{}) :: [%Event{}]
-  def add_recurring_events(events, end_date \\ Date.now) do
+  def add_recurring_events(events, end_date \\ DateTime.utc_now()) do
     events ++ (events |> Enum.reduce([], fn(event, revents) ->
       case event.rrule do
         nil ->
@@ -108,7 +107,7 @@ defmodule ExIcal.Recurrence do
   defp add_recurring_events_until(event, until, shift_opts) do
     new_event = shift_event(event, shift_opts)
 
-    case Date.compare(new_event.start, until) do
+    case Timex.compare(new_event.start, until) do
      -1 -> [new_event] ++ add_recurring_events_until(new_event, until, shift_opts)
       0 -> [new_event]
       1 -> []
@@ -126,8 +125,8 @@ defmodule ExIcal.Recurrence do
 
   defp shift_event(event, shift_opts) do
     new_event = event
-    new_event = %{new_event | start: Date.shift(event.start, shift_opts)}
-    new_event = %{new_event | end: Date.shift(event.end, shift_opts)}
+    new_event = %{new_event | start: Timex.shift(event.start, shift_opts)}
+    new_event = %{new_event | end: Timex.shift(event.end, shift_opts)}
     new_event
   end
 end
